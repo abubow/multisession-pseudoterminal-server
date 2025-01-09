@@ -1,6 +1,7 @@
 package ws
 
 import (
+	"bufio"
 	"io"
 	"log"
 	"net/http"
@@ -55,6 +56,16 @@ func (server *Server) echo(w http.ResponseWriter, r *http.Request) {
 			terminal.Write([]byte(string(message) + "\n"))
 
 			go server.handleMessage(message)
+		}
+	}()
+	func() {
+		reader := bufio.NewReader(terminal)
+		for {
+			line, err := reader.ReadString('\n')
+			if err != nil {
+				break
+			}
+			connection.WriteMessage(websocket.TextMessage, []byte(line))
 		}
 	}()
 
