@@ -7,10 +7,10 @@ import (
 )
 
 func main() {
-	server := ws.StartServer(messageHandler)
+	ws.StartServer(messageHandler)
 
 	for {
-		server.WriteMessage([]byte("Hello"))
+		// server.WriteMessage([]byte("Hello"))
 		time.Sleep(2 * time.Second)
 	}
 }
